@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 注册要能在手机运行，需要更新 mate viewpoint -->
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <title>注册界面</title>
+</head>
+
+<body>
+    <form id="registerForm">
+        <div>
+            <label>
+                用户名
+                <input type="text" name="name">
+            </label>
+        </div>
+        <div>
+            <label>
+                密码
+                <input type="password" name="password">
+            </label>
+        </div>
+        <div>
+            <button type="submit">注册</button>
+        </div>
+    </form>
+    <!-- 在这里引入 jQuery —— bootCDN -->
+    <!-- 实现用户点击 “注册” 按钮后的功能 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js">
+    </script>
+    <script>
+        const $form = $('#registerForm')
+        $form.on('submit', (e) => {
+            // 表单有默认事件，第一步就是阻止默认事件 
+            e.preventDefault()
+            const name = $form.find('input[name=name]').val()
+            const password = $form.find('input[name=password]').val()
+            console.log(name, password)
+            // 拿到 name 和 password 之后提交它们
+            // 发一个 Ajax 请求
+            $.ajax({
+                method: 'POST',
+                url: '/register',
+                contentType: 'text/json;charset=UTF-8',
+                data: JSON.stringify({ name: name, password: password })
+            }).then(() => {
+                alert("注册成功！")
+                // 跳转到登录页
+                location.href = './sign_in.html'
+            }, () => {
+
+            })
+        })
+    </script>
+</body>
+
+</html>
